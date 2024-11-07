@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
+>
+<head>
+    <title>Cadastro de ALunos</title>
+     <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+
+    <div class="box">
+        <h1>Cadastro de Alunos#</h1>
+          
+         <form method="post" action="/aluno" th:objetc="${aluno}" >
+            <input type="hidden" name="_method" value="put" th:if="${aluno!= null}">
+            <input type="hidden" name="id" th:value="${aluno?.id}">
+            
+            <div>
+                <label for="nome"> Nome Completo: </label>
+                <input type="text" id="nome" name="nome" th:value="${aluno?.nome}">
+            </div> 
+            
+            <div>
+                <label for="anoFormacao"> Ano de Formação: </label>
+                <input type="number" id="anoFormacao" name="anoFormacao" th:value="${aluno?.anoFormacao}">
+            </div>  
+               
+             <div class="form-group">
+				<label>Selecione um Curso:</label>
+	           	<select id="cursoFormado" name="cursoFormado" >
+				   	<option> -Selecione- </option>
+	               	<option th:each="curso : ${cursos}"
+	                   	th:selected="(${curso.id} == ${aluno?.cursoFormado?.id})"
+		              	th:value="${curso.id}"
+		               	th:text="${curso.nome}" > </option>
+	            </select>
+            </div>
+
+             <div>
+                <label for="ra"> RA: </label>
+                <input type="number" id="ra" name="ra" th:value="${aluno?.ra}">
+               </div>  
+
+            <div>
+                <label for="status"> Status: </label>
+                <input type="text" id="status" name="status" th:value="${aluno?.status}">
+            </div>     
+
+            <div>
+                <label for="foto"> Foto: </label>
+                <input type="text" id="foto" name="foto" th:value="${aluno?.foto}">
+            </div>     
+            
+            <div class="botoes">
+		 		<input type="submit" value="Enviar">
+            </div>
+        </form>
+			
+    </div>
+
+</div>
+
+</body>
+</html>
