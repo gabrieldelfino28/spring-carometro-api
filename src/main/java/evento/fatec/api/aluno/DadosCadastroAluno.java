@@ -4,11 +4,12 @@ import evento.fatec.api.curso.Curso;
 import jakarta.validation.constraints.NotBlank;
 
 public record DadosCadastroAluno(
-		@NotBlank
-  String nome, String anoFormacao, Long cursoFormado, String ra, String status, String foto
-		
+		@NotBlank String nome,
+		String anoFormacao,
+		Long cursoFormado,
+		Long turma,
+		String ra,
+		String status,
+		String foto
 	) {
-
-	
-
 }

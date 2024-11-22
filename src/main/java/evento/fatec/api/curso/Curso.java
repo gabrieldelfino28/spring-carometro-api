@@ -33,7 +33,7 @@ import lombok.Setter;
 	private int tempoDeCurso;
 	private String periodo;
 
-		
+
 	public Curso(@Valid DadosCadastroCurso c) {
 		this.nome = c.nome();
 		this.unidade = c.unidade();

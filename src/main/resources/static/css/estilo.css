@@ -160,6 +160,7 @@ nav a:hover {
   	border-radius: 2px;
     background-color: var(--branco);
     color: var(--Vermelho-escuro);
+    transition: 0.3s;
 }
 
 div > a {

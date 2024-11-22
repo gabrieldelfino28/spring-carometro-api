@@ -2,6 +2,7 @@ package evento.fatec.api.controller;
 
 import evento.fatec.api.aluno.*;
 import evento.fatec.api.curso.CursoRepository;
+import evento.fatec.api.turma.TurmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +24,13 @@ public class AlunoController {
     private CursoService cursoService;
     @Autowired
     private CursoRepository cursoRepository;
+    @Autowired
+    private TurmaService turmaService;
 
     @GetMapping("/cadastro")
     public String carregaPaginaFormulario(Long id, Model model) {
         model.addAttribute("cursos", cursoService.getAllCurso());
+        model.addAttribute("turmas", turmaService.getAllTurma());
         if (id != null) {
             var alu = repository.getReferenceById(id);
             model.addAttribute("aluno", alu);
@@ -38,14 +42,16 @@ public class AlunoController {
     public String carregaPaginaListagem(Model model) {
         model.addAttribute("lista", repository.findAll());
         model.addAttribute("cursos", cursoService.getAllCurso());
+        model.addAttribute("turmas", turmaService.getAllTurma());
         return "aluno/listagem";
     }
 
     @PostMapping
     @Transactional
     public String cadastrar(@Valid DadosCadastroAluno alu) {
+        var turma = turmaService.getTurmaById(alu.turma());
         var curso = cursoService.getCursoById(alu.cursoFormado());
-        var aluno = new Aluno(alu, curso);
+        var aluno = new Aluno(alu, curso, turma);
         repository.save(aluno);
         return "redirect:aluno";
     }
@@ -61,10 +67,10 @@ public class AlunoController {
     @PutMapping
     @Transactional
     public String atualizar(@Valid DadosAtualizadoAluno alu) {
+        var turma = turmaService.getTurmaById(alu.turma());
         var curso = cursoService.getCursoById(alu.cursoFormado());
         var aluno = repository.getReferenceById(alu.id());
-        //aluno.setCursoFormado(curso);
-        aluno.AtualizarInformacao(alu, curso);
+        aluno.AtualizarInformacao(alu, curso, turma);
         return "redirect:aluno";
     }
 
