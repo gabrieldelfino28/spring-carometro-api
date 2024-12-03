@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
+>
+<head>
+    <title>Cadastro de Turmas</title>
+     <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+
+    <div class="box">
+        <h1>Cadastro de Turmas#</h1>
+          
+         <form method="post" action="/turma" >
+            <input type="hidden" name="_method" value="put" th:if="${turma!= null}">
+            <input type="hidden" name="id" th:value="${turma?.id}">
+            
+            <div>
+                <label for="nome"> Nome Turma: </label>
+                <input type="text" id="nome" name="nome" th:value="${turma?.nome}">
+            </div> 
+            
+            <div>
+                <label for="periodo"> Periodo: </label>
+                <input type="text" id="periodo" name="periodo" th:value="${turma?.periodo}">
+            </div>  
+             
+             <div>
+                <label for="semestre"> Semestre: </label>
+                <input type="number" id="semestre" name="semestre" th:value="${turma?.semestre}">
+            </div>  
+               
+             <div>
+                <label for="anoInicio"> Ano Inicio: </label>
+                <input type="number" id="anoInicio" name="anoInicio" th:value="${turma?.anoInicio}">
+            </div>
+             <div>
+                <label for="periodo"> Ano Formação: </label>
+                <input type="number" id="anoFormacao" name="anoFormacao" th:value="${turma?.anoFormacao}">
+            </div>
+              
+            <div class="botoes">
+		 		<input type="submit" value="Enviar">
+            </div>
+        </form>
+			
+    </div>
+
+</div>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Comentarios</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+<div layout:fragment="conteudo">
+    <h1> Lista de Comentarios</h1>
+    <a href="/comentario/cadastro">Novo</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Categoria</th>
+            <th>Data</th>
+            <th>Conteudo</th>
+            <th>Aluno</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comentario : ${lista}">
+            <td th:text="${comentario.categoria}"></td>
+            <td th:text="${comentario.data}"></td>
+            <td th:text="${comentario.conteudo}"></td>
+            <td th:text="${comentario.aluno.nome}"></td>
+            <td>
+				<button>
+                <a th:href="@{/comentario/cadastro?id={id}(id=${comentario.id})}">Editar</a>
+				</button>
+                <form action="/comentario" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="id" th:value="${comentario.id}">
+                    <input type="submit" value="Excluir">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
