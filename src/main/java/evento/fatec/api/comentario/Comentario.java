@@ -3,6 +3,7 @@ package evento.fatec.api.comentario;
 import evento.fatec.api.aluno.Aluno;
 import evento.fatec.api.link.DadosAtualizadoLink;
 import evento.fatec.api.link.DadosCadastroLink;
+import evento.fatec.api.link.InsertLinkFromForm;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +33,13 @@ public class Comentario {
     private Aluno aluno;
 
     public Comentario(@Valid DadosCadastroComentario c, Aluno alu) {
+        this.categoria = c.categoria();
+        this.data = c.data();
+        this.conteudo = c.conteudo();
+        this.aluno = alu;
+    }
+
+    public Comentario(@Valid InsertComentarioFromForm c, Aluno alu) {
         this.categoria = c.categoria();
         this.data = c.data();
         this.conteudo = c.conteudo();

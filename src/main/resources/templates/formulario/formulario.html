@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
+>
+<head>
+    <title>Formulário de Aluno</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+
+    <div class="box">
+        <h1>Formulário#</h1>
+
+        <form method="post" action="/formulario" enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="put" th:if="${aluno!= null}">
+            <input type="hidden" name="id" th:value="${aluno?.id}">
+
+            <div>
+                <label for="nome"> Nome Completo: </label>
+                <input type="text" id="nome" name="nome" th:value="${aluno?.nome}">
+            </div>
+
+            <div>
+                <label for="anoFormacao"> Ano de Formação: </label>
+                <input type="number" id="anoFormacao" name="anoFormacao" th:value="${aluno?.anoFormacao}">
+            </div>
+
+            <div class="form-group">
+                <label>Selecione um Curso:</label>
+                <select id="cursoFormado" name="cursoFormado">
+                    <option> -Selecione-</option>
+                    <option th:each="curso : ${cursos}"
+                            th:selected="(${curso.id} == ${aluno?.cursoFormado?.id})"
+                            th:value="${curso.id}"
+                            th:text="${curso.nome}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Selecione uma Turma:</label>
+                <select id="turma" name="turma">
+                    <option> -Selecione-</option>
+                    <option th:each="turma : ${turmas}"
+                            th:selected="(${turma.id} == ${aluno?.turma?.id})"
+                            th:value="${turma.id}"
+                            th:text="${turma.nome}"></option>
+                </select>
+            </div>
+
+            <div>
+                <label for="ra"> RA: </label>
+                <input type="number" id="ra" name="ra" th:value="${aluno?.ra}">
+            </div>
+
+            <div>
+                <label for="file"> Foto: </label>
+                <input type="file" id="file" name="file"/><br/><br/>
+            </div>
+
+            <h1>Seção de Histórico#</h1>
+
+            <input type="hidden" name="_method" value="put" th:if="${historico!= null}">
+            <input type="hidden" name="id" th:value="${historico?.id}">
+
+            <div>
+                <label for="nomeEmpresa"> Nome da Empresa: </label>
+                <input type="text" id="nomeEmpresa" name="nomeEmpresa" th:value="${historico?.nomeEmpresa}">
+            </div>
+
+            <div>
+                <label for="cargo"> Cargo: </label>
+                <input type="text" id="cargo" name="cargo" th:value="${historico?.cargo}">
+            </div>
+
+            <div>
+                <label for="dataContratacao"> Data de Contratação: </label>
+                <input type="date" id="dataContratacao" name="dataContratacao"
+                       th:value="${historico?.dataContratacao}">
+            </div>
+
+            <div>
+                <label for="dataDesligamento"> Emprego Atual / Desligamento (Data): </label>
+                <input type="text" id="dataDesligamento" name="dataDesligamento"
+                       th:value="${historico?.dataDesligamento}">
+            </div>
+
+            <div>
+                <label for="funcao"> Função: </label>
+                <input type="text" id="funcao" name="funcao" th:value="${historico?.funcao}">
+            </div>
+
+
+            <h1>Seção de Rede Social#</h1>
+            <input type="hidden" name="_method" value="put" th:if="${link!= null}">
+            <input type="hidden" name="id" th:value="${link?.id}">
+
+            <div>
+                <label for="nomeRede"> Nome da Rede: </label>
+                <input type="text" id="nomeRede" name="nomeRede" th:value="${link?.nomeRede}">
+            </div>
+
+            <div>
+                <label for="linkURL"> Link URL: </label>
+                <input type="text" id="linkURL" name="linkURL" th:value="${link?.linkURL}">
+            </div>
+            <h1>Algum Comentário sobre a Fatec?</h1>
+
+            <input type="hidden" name="_method" value="put" th:if="${comentario!= null}">
+            <input type="hidden" name="id" th:value="${comentario?.id}">
+
+            <div>
+                <label for="categoria"> Categoria: </label>
+                <input type="text" id="categoria" name="categoria" th:value="${comentario?.categoria}">
+            </div>
+
+            <div>
+                <label for="data"> Data: </label>
+                <input type="date" id="data" name="data" th:value="${comentario?.data}">
+            </div>
+
+            <div>
+                <label for="conteudo"> Conteudo: </label>
+                <input type="text" id="conteudo" name="conteudo" th:value="${comentario?.conteudo}">
+            </div>
+
+            <div class="botoes">
+                <input type="submit" value="Enviar">
+            </div>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

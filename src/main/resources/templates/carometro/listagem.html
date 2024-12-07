@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Carometro</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+<div layout:fragment="conteudo">
+    <h1> Carometro </h1>
+    <table>
+        <thead>
+        <tr>
+			<th>Foto</th>
+            <th>Nome aluno</th>
+            <th>Ano de Formação</th>
+            <th>Curso Formado</th>
+            <th>Turma</th>
+            <th>RA</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="aluno : ${lista}">
+            <td><img width="100px" height="100px"
+                 th:src="@{/imagens/{foto}(foto=${aluno.foto})}" /></td>
+            <td th:text="${aluno.nome}"></td>
+            <td th:text="${aluno.anoFormacao}"></td>
+            <td th:text="${aluno.cursoFormado.nome}"></td>
+            <td th:text="${aluno.turma.nome}"></td>
+            <td th:text="${aluno.ra}"></td>
+            
+            <td>
+				<button>
+                <a th:href="@{/carometro/detalhes?id={id}(id=${aluno.id})}">Detalhes</a>
+				</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

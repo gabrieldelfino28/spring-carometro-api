@@ -9,7 +9,6 @@ public record DadosCadastroAluno(
 		Long cursoFormado,
 		Long turma,
 		String ra,
-		String status,
 		String foto
 	) {
 }

@@ -51,7 +51,7 @@ public class Aluno {
         this.nome = alu.nome();
         this.anoFormacao = alu.anoFormacao();
         this.ra = alu.ra();
-        this.status = alu.status();
+        this.status = "Pendente";
         this.foto = alu.foto();
         this.cursoFormado = cursoFormado;
         this.turma = turma;

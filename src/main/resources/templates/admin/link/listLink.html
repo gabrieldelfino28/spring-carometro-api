@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin-template.html}">
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Links</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+<div layout:fragment="conteudo">
+    <h1> Lista de Links</h1>
+    <a href="/admin/link/cadastro">Novo</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome Rede</th>
+            <th>Link URL</th>
+            <th>Aluno</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="link : ${lista}">
+            <td th:text="${link.nomeRede}"></td>
+            <td th:text="${link.linkURL}"></td>
+            <td th:text="${link.aluno.nome}"></td>
+            <td>
+                <a th:href="@{/admin/link/cadastro?id={id}(id=${link.id})}">Editar</a>
+
+                <form action="/admin/link" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="id" th:value="${link.id}">
+                    <input type="submit" value="Excluir">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

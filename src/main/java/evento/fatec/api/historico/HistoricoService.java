@@ -18,4 +18,5 @@ public class HistoricoService {
 	public Historico getHistoricoById(Long id) {
 		return repository.getReferenceById(id);
 	}
+
 }

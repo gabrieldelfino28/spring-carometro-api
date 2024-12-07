@@ -8,7 +8,7 @@ public record DadosCadastroHistorico(
 		@NotBlank String nomeEmpresa,
 		String cargo,
 		LocalDate dataContratacao,
-		LocalDate dataDesligamento,
+		String dataDesligamento,
 		String funcao,
 		Long aluno
 	) {

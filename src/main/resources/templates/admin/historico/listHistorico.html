@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin-template.html}">
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Históricos</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+<div layout:fragment="conteudo">
+    <h1> Lista de Históricos</h1>
+    <a href="/admin/historico/cadastro">Novo</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Nome Empresa</th>
+            <th>Cargo</th>
+            <th>Data Contratação</th>
+            <th>Data Desligamento</th>
+            <th>Função</th>
+            <th>Aluno</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="historico : ${lista}">
+            <td th:text="${historico.nomeEmpresa}"></td>
+            <td th:text="${historico.cargo}"></td>
+            <td th:text="${historico.dataContratacao}"></td>
+            <td th:text="${historico.dataDesligamento}"></td>
+            <td th:text="${historico.funcao}"></td>
+            <td th:text="${historico.aluno.nome}"></td>
+            <td>
+                <a th:href="@{/admin/historico/cadastro?id={id}(id=${historico.id})}">Editar</a>
+
+                <form action="/admin/historico" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="id" th:value="${historico.id}">
+                    <input type="submit" value="Excluir">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

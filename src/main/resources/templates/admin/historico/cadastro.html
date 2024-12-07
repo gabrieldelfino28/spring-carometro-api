@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin-template.html}">
+>
+<head>
+    <title>Cadastro de Históricos</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+
+<div layout:fragment="conteudo">
+
+    <div class="box">
+        <h1>Cadastro de Históricos#</h1>
+
+        <form method="post" action="/admin/historico" th:objetc="${historico}">
+            <input type="hidden" name="_method" value="put" th:if="${historico!= null}">
+            <input type="hidden" name="id" th:value="${historico?.id}">
+
+            <div>
+                <label for="nomeEmpresa"> Nome da Empresa: </label>
+                <input type="text" id="nomeEmpresa" name="nomeEmpresa" th:value="${historico?.nomeEmpresa}">
+            </div>
+
+            <div>
+                <label for="cargo"> Cargo: </label>
+                <input type="text" id="cargo" name="cargo" th:value="${historico?.cargo}">
+            </div>
+
+            <div>
+                <label for="dataContratacao"> Data de Contratação: </label>
+                <input type="date" id="dataContratacao" name="dataContratacao" th:value="${historico?.dataContratacao}">
+            </div>
+
+            <div>
+                <label for="dataDesligamento"> Data de Desligamento: </label>
+                <input type="date" id="dataDesligamento" name="dataDesligamento" th:value="${historico?.dataDesligamento}">
+            </div>
+
+            <div>
+                <label for="funcao"> Função: </label>
+                <input type="text" id="funcao" name="funcao" th:value="${historico?.funcao}">
+            </div>
+
+            <div class="form-group">
+                <label>Selecione um Aluno:</label>
+                <select id="aluno" name="aluno">
+                    <option> -Selecione-</option>
+                    <option th:each="aluno : ${alunos}"
+                            th:selected="(${aluno.id} == ${historico?.aluno?.id})"
+                            th:value="${aluno.id}"
+                            th:text="${aluno.nome}"></option>
+                </select>
+            </div>
+
+            <div class="botoes">
+                <input type="submit" value="Enviar">
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

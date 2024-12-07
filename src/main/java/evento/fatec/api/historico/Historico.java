@@ -24,7 +24,7 @@ public class Historico {
     private String nomeEmpresa;
     private String cargo;
     private LocalDate dataContratacao;
-    private LocalDate dataDesligamento;
+    private String dataDesligamento;
     private String funcao;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,6 +32,15 @@ public class Historico {
     private Aluno aluno;
 
     public Historico(@Valid DadosCadastroHistorico t, Aluno alu) {
+        this.nomeEmpresa = t.nomeEmpresa();
+        this.cargo = t.cargo();
+        this.dataContratacao = t.dataContratacao();
+        this.dataDesligamento = t.dataDesligamento();
+        this.funcao = t.funcao();
+        this.aluno = alu;
+    }
+
+    public Historico(@Valid InsertHistoricoFromForm t, Aluno alu) {
         this.nomeEmpresa = t.nomeEmpresa();
         this.cargo = t.cargo();
         this.dataContratacao = t.dataContratacao();

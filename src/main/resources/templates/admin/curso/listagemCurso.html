@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin-template.html}">
+ 
+     >  
+<head>
+     <meta charset="UTF-8">
+    <title>Lista de Alunos</title>
+     <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+<div layout:fragment="conteudo">
+    <h1> Lista de Curso</h1>
+    <a href="/admin/curso/cadastro">Novo Curso</a>
+    <table>
+        <thead>
+            <tr>
+				<th>Nome</th>
+             	<th>Unidade</th>
+				<th>tempo De Curso</th>
+				<th>periodo</th>
+				<th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="curso : ${lista}">
+            	<td th:text="${curso.nome}"></td>
+                <td th:text="${curso.unidade}"></td>
+				<td th:text="${curso.tempoDeCurso}"></td>
+				<td th:text="${curso.periodo}"></td>
+				<td>
+					<a th:href="@{/admin/curso/cadastro?id={id}(id=${curso.id})}">Editar</a>
+										
+					<form action="/admin/curso" method="post">
+						<input type="hidden" name="_method" value="delete">
+						<input type="hidden" name="id" th:value="${curso.id}">
+						<input type="submit" value="Excluir">
+					</form>
+				</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
+
+
+</body>
+</html>

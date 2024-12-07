@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin-template.html}">
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Alunos</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+<div layout:fragment="conteudo">
+    <h1> Lista de Aluno</h1>
+    <a href="/admin/aluno/cadastro">Novo</a>
+    <table>
+        <thead>
+        <tr>
+            <th>Foto</th>
+            <th>Nome aluno</th>
+            <th>Ano de Formação</th>
+            <th>Curso Formado</th>
+            <th>Turma</th>
+            <th>RA</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="aluno : ${lista}">
+            <td><img width="100px" height="100px"
+                     th:src="@{/imagens/{foto}(foto=${aluno.foto})}" /></td>
+            <td th:text="${aluno.nome}"></td>
+            <td th:text="${aluno.anoFormacao}"></td>
+            <td th:text="${aluno.cursoFormado.nome}"></td>
+            <td th:text="${aluno.turma.nome}"></td>
+            <td th:text="${aluno.ra}"></td>
+            <td th:text="${aluno.status}"></td>
+            <td>
+                <a th:href="@{/admin/aluno/cadastro?id={id}(id=${aluno.id})}">Editar</a>
+
+                <form action="/admin/aluno" method="post">
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" name="id" th:value="${aluno.id}">
+                    <input type="submit" value="Excluir">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
