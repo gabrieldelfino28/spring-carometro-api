@@ -91,7 +91,8 @@ public class AdminController {
                 break;
             }
         }
-        historicoRepository.deleteById(historico.getId());
+        if (historico.getId() != null)
+            historicoRepository.deleteById(historico.getId());
 
         var link = new Link();
         List<Link> links = linkService.getAllLink();
@@ -101,7 +102,8 @@ public class AdminController {
                 break;
             }
         }
-        linkRepository.deleteById(link.getId());
+        if (link.getId() != null)
+            linkRepository.deleteById(link.getId());
 
         var comentario = new Comentario();
         List<Comentario> comentarios = comentarioService.getAllComentario();
@@ -111,7 +113,8 @@ public class AdminController {
                 break;
             }
         }
-        comentarioRepository.deleteById(comentario.getId());
+        if (comentario.getId() != null)
+            comentarioRepository.deleteById(comentario.getId());
     }
 
     @PutMapping

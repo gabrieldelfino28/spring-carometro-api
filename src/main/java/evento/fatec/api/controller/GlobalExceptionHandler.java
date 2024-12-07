@@ -14,6 +14,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Oops! Algo deu Errado! Por favor, tente novamente.\n\t\n\t" +
-                        "(PS: Para deletar um Aluno, é necessário excluir as dependências primeiro.)");
+                        "(PS: Para deletar um Curso ou Turma, é necessário excluir as dependências primeiro.)");
     }
 }

@@ -15,7 +15,7 @@
     <div class="box">
         <h1>Cadastro de Alunos#</h1>
 
-        <form method="post" action="/admin/aluno" th:objetc="${aluno}">
+        <form method="post" action="/admin/aluno" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="put" th:if="${aluno!= null}">
             <input type="hidden" name="id" th:value="${aluno?.id}">
 
@@ -62,8 +62,8 @@
             </div>
 
             <div>
-                <label for="foto"> Foto: </label>
-                <input type="text" id="foto" name="foto" th:value="${aluno?.foto}">
+                <label for="file"> Foto: </label>
+                <input type="file" id="file" name="file"/><br/><br/>
             </div>
 
             <div class="botoes">

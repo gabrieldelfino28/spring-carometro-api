@@ -3,13 +3,18 @@ package evento.fatec.api.controller.admin;
 import evento.fatec.api.comentario.Comentario;
 import evento.fatec.api.comentario.ComentarioRepository;
 import evento.fatec.api.comentario.ComentarioService;
+import evento.fatec.api.comentario.DadosCadastroComentario;
+import evento.fatec.api.historico.DadosCadastroHistorico;
 import evento.fatec.api.historico.Historico;
 import evento.fatec.api.historico.HistoricoRepository;
 import evento.fatec.api.historico.HistoricoService;
+import evento.fatec.api.link.DadosCadastroLink;
 import evento.fatec.api.link.Link;
 import evento.fatec.api.link.LinkRepository;
 import evento.fatec.api.link.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -29,7 +34,11 @@ import evento.fatec.api.curso.CursoRepository;
 import evento.fatec.api.curso.CursoService;
 import evento.fatec.api.turma.TurmaService;
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -47,7 +56,6 @@ public class AlunoController {
     @Autowired
     private TurmaService turmaService;
 
-
     @Autowired
     HistoricoService historicoService;
     @Autowired
@@ -63,8 +71,15 @@ public class AlunoController {
     @Autowired
     ComentarioRepository comentarioRepository;
 
+    @Autowired
+    private ResourceLoader resourceLoader;
+
+    // Save the uploaded file to this folder
+    private static String UPLOADED_FOLDER = "src/main/resources/static/imagens/";
+
     @GetMapping("/cadastro")
-    public String carregaPaginaFormulario(Long id, Model model) {
+    public String carregaPaginaFormulario(Long id, Model model) throws Exception {
+        reloadResource();
         model.addAttribute("cursos", cursoService.getAllCurso());
         model.addAttribute("turmas", turmaService.getAllTurma());
         if (id != null) {
@@ -84,20 +99,30 @@ public class AlunoController {
 
     @PostMapping
     @Transactional
-    public String cadastrar(@Valid DadosCadastroAluno alu) {
+    public String cadastrar(
+            @Valid DadosCadastroAluno alu,
+            @RequestParam("file") MultipartFile file) throws IOException {
+
         var turma = turmaService.getTurmaById(alu.turma());
         var curso = cursoService.getCursoById(alu.cursoFormado());
         var aluno = new Aluno(alu, curso, turma);
         repository.save(aluno);
-        return "redirect:aluno";
-    }
 
-    @GetMapping("/buscar")
-    @Transactional
-    public String buscarPorRa(@RequestParam("raBusca") String raBusca, Model model) {
-        Aluno aluno = alunoService.buscarPorRa(raBusca);
-        model.addAttribute("aluno", aluno);
-        return "admin/aluno/cadastro";
+        if (!file.isEmpty()) {
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            // Files.write(path, bytes);
+            file.transferTo(path);
+            aluno.atualizarImagem(file.getOriginalFilename());
+            // repository.save(aluno);
+        }
+        try {
+            reloadResource();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:aluno";
     }
 
     @PutMapping
@@ -128,7 +153,8 @@ public class AlunoController {
                 break;
             }
         }
-        historicoRepository.deleteById(historico.getId());
+        if (historico.getId() != null)
+            historicoRepository.deleteById(historico.getId());
 
         var link = new Link();
         List<Link> links = linkService.getAllLink();
@@ -138,7 +164,8 @@ public class AlunoController {
                 break;
             }
         }
-        linkRepository.deleteById(link.getId());
+        if (link.getId() != null)
+            linkRepository.deleteById(link.getId());
 
         var comentario = new Comentario();
         List<Comentario> comentarios = comentarioService.getAllComentario();
@@ -148,6 +175,15 @@ public class AlunoController {
                 break;
             }
         }
-        comentarioRepository.deleteById(comentario.getId());
+        if (comentario.getId() != null)
+            comentarioRepository.deleteById(comentario.getId());
+    }
+
+    public void reloadResource() throws Exception {
+        // Caminho relativo ao diretório de recursos (por exemplo, dentro de src/main/resources/static/)
+        String resourcePath = "classpath:/static/imagens";
+
+        // Carrega o recurso
+        Resource resource = resourceLoader.getResource(resourcePath);
     }
 }

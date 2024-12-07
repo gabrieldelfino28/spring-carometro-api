@@ -262,6 +262,19 @@ label {
     color: var(--Vermelho-escuro);
 }
 
+#text-view {
+    width: 50vw;
+    border-radius: 5px;
+    background-color: var(--cinza-texto);
+    display: block;
+    color: black;
+    padding: 1em;
+    cursor: white;
+    line-height: 1.5;
+    padding: 0 0 .1em 1em;
+
+    color: var(--Vermelho-escuro);
+}
 input[type="submit"] {
   background-color: var(--azul-escuro);
   color: white;

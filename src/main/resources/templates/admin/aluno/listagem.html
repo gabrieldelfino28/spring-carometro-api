@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <tr th:each="aluno : ${lista}">
-            <td><img width="100px" height="100px"
+            <td><img width="200px" height="200px"
                      th:src="@{/imagens/{foto}(foto=${aluno.foto})}" /></td>
             <td th:text="${aluno.nome}"></td>
             <td th:text="${aluno.anoFormacao}"></td>
