@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{template.html}">
+>
+<head>
+    <title>Detalhes - Aluno View</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+</head>
+<body>
+<div layout:fragment="conteudo">
+
+    <div class="box">
+        <h1>Detalhes#</h1><br>
+
+        <div style="
+            margin: auto;
+            border: 2px;
+            border-radius: 20%;
+        ">
+            <img width="300px" height="300px" id="foto"
+                 th:src="@{/imagens/{foto}(foto=${aluno?.foto})}" />
+        </div>
+
+        <form method="#">
+            <div class="text-view">
+                <label for="nome"> Nome Completo: </label>
+                <input type="text" id="nome" name="nome" th:value="${aluno?.nome}" disabled>
+            </div>
+
+            <div>
+                <label for="anoFormacao"> Ano de Formação: </label>
+                <input type="number" id="anoFormacao" name="anoFormacao" th:value="${aluno?.anoFormacao}" disabled>
+            </div>
+
+            <div>
+                <label for="cursoFormado"> Curso: </label>
+                <input type="text" id="cursoFormado" name="cursoFormado" th:value="${aluno?.cursoFormado?.nome}" disabled>
+            </div>
+
+            <div>
+                <label for="turma"> Turma: </label>
+                <input type="text" id="turma" name="turma" th:value="${aluno?.turma?.nome}" disabled>
+            </div>
+
+            <div>
+                <label for="ra"> RA: </label>
+                <input type="number" id="ra" name="ra" th:value="${aluno?.ra}" disabled>
+            </div>
+
+            <h1>Seção de Histórico#</h1>
+
+            <input type="hidden" name="_method" value="put" th:if="${historico!= null}">
+            <input type="hidden" name="id" th:value="${historico?.id}" disabled>
+
+            <div>
+                <label for="nomeEmpresa"> Nome da Empresa: </label>
+                <input type="text" id="nomeEmpresa" name="nomeEmpresa" th:value="${historico?.nomeEmpresa}" disabled>
+            </div>
+
+            <div>
+                <label for="cargo"> Cargo: </label>
+                <input type="text" id="cargo" name="cargo" th:value="${historico?.cargo}" disabled>
+            </div>
+
+            <div>
+                <label for="dataContratacao"> Data de Contratação: </label>
+                <input type="date" id="dataContratacao" name="dataContratacao"
+                       th:value="${historico?.dataContratacao}" disabled>
+            </div>
+
+            <div>
+                <label for="dataDesligamento"> Emprego Atual / Desligamento (Data): </label>
+                <input type="text" id="dataDesligamento" name="dataDesligamento"
+                       th:value="${historico?.dataDesligamento}" disabled>
+            </div>
+
+            <div>
+                <label for="funcao"> Função: </label>
+                <input type="text" id="funcao" name="funcao" th:value="${historico?.funcao}" disabled>
+            </div>
+
+
+            <h1>Seção de Rede Social#</h1>
+            <input type="hidden" name="_method" value="put" th:if="${link!= null}">
+            <input type="hidden" name="id" th:value="${link?.id}">
+
+            <div>
+                <label for="nomeRede"> Nome da Rede: </label>
+                <input type="text" id="nomeRede" name="nomeRede" th:value="${link?.nomeRede}" disabled>
+            </div>
+
+            <div>
+                <label for="linkURL"> Link URL: </label><br>
+                <a target="_blank" th:href="${link?.linkURL}">
+                <input type="text" id="linkURL" name="linkURL" th:value="${link?.linkURL}" readonly>
+                </a>
+            </div>
+            <h1>Algum Comentário sobre a Fatec?</h1>
+
+            <input type="hidden" name="_method" value="put" th:if="${comentario!= null}">
+            <input type="hidden" name="id" th:value="${comentario?.id}">
+
+            <div>
+                <label for="categoria"> Classificação (Bom, Ruim ou Mediano): </label>
+                <input type="text" id="categoria" name="categoria" th:value="${comentario?.categoria}" disabled>
+            </div>
+
+            <div>
+                <label for="data"> Data: </label>
+                <input type="date" id="data" name="data" th:value="${comentario?.data}" disabled>
+            </div>
+
+            <div>
+                <label for="conteudo"> Conteudo: </label>
+                <input type="text" id="conteudo" name="conteudo" th:value="${comentario?.conteudo}" disabled>
+            </div>
+
+            <div class="botoes">
+                <a th:href="@{/admin}">Voltar</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

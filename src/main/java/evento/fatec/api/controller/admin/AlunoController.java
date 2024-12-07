@@ -127,11 +127,25 @@ public class AlunoController {
 
     @PutMapping
     @Transactional
-    public String atualizar(@Valid DadosAtualizadoAluno alu) {
+    public String atualizar(@Valid DadosAtualizadoAluno alu, @RequestParam("file") MultipartFile file) throws IOException  {
         var turma = turmaService.getTurmaById(alu.turma());
         var curso = cursoService.getCursoById(alu.cursoFormado());
         var aluno = repository.getReferenceById(alu.id());
         aluno.atualizarInformacao(alu, curso, turma);
+        if (!file.isEmpty()) {
+            // Get the file and save it somewhere
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            // Files.write(path, bytes);
+            file.transferTo(path);
+            aluno.atualizarImagem(file.getOriginalFilename());
+            // repository.save(aluno);
+        }
+        try {
+            reloadResource();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "redirect:aluno";
     }
 

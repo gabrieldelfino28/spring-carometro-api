@@ -37,6 +37,8 @@
             <td th:text="${aluno.ra}"></td>
             <td th:text="${aluno.status}"></td>
             <td>
+                <a th:href="@{/admin/detalhes?id={id}(id=${aluno.id})}">Detalhes</a>
+                <br>
                 <form action="/admin" method="post">
                     <input type="hidden" name="_method" value="put">
                     <input type="hidden" name="id" th:value="${aluno.id}">
