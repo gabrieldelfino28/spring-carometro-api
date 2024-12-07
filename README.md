@@ -9,9 +9,9 @@ Este pode aprovar ou reprovar os carômetros conforme o necessário. Apenas car�
 * Java Development Kit (JDK).
 * (Optional) IDE, such as VSCode, NetBeans or Eclipse.
 
-### Folder Structure
+### Estrutura do Projeto
 ````
-Back Office
+Carometro
 ├── bin/
 ├── src/
 │   ├── main/
